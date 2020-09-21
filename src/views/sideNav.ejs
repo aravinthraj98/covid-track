@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+  
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+	 <link href="/assets/sidenav.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+        <div class="bg-light border-right" id="sidebar-wrapper">
+            <span class=" badge badge-primary navbar-brand sidebar-heading">Covid-19</span>
+            <div class="list-group list-group-flush">
+                <a href="#" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+                <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
+                <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
+                <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
+                <a href="#" data-toggle="modal" data-target="#detailsModal" class="list-group-item list-group-item-action bg-light">Family Details</a>
+                <a href="#" data-toggle="modal" data-target="#pwdModal" class="list-group-item list-group-item-action bg-light">Change Password</a>
+                <a href="#" data-toggle="modal" data-target="#complaintModal" class="list-group-item list-group-item-action bg-light">Raise a Complaint</a>
+                <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
+                <a href="#" class="list-group-item list-group-item-action bg-light">Logout</a>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <button class="btn" id="menu-toggle"><span class="navbar-toggler-icon"></span></button>
+            </nav>
+
+            <div class="container w-75">
+                <h1 class="mt-3">Current Data</h1>
+                <table class="table table-borderless table-primary">
+                    <thead>
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Oxygen(%)</th>
+                        <th scope="col">Temperature(F)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        <th scope="row">1</th>
+                        <td>Mark</td>
+                        <td>95</td>
+                        <td>98</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">2</th>
+                        <td>Jacob</td>
+                        <td>99</td>
+                        <td>95</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">3</th>
+                        <td>Larry</td>
+                        <td>94</td>
+                        <td>92</td>
+                        </tr>
+                        <tr>
+                        <th scope="row">4</th>
+                        <td>Robb</td>
+                        <td>99</td>
+                        <td>95</td>
+                        </tr>
+                    </tbody>
+                    </table>
+            </div>
+
+        </div>
+        <!-- Complaint modal -->
+        <div class="modal fade" id="complaintModal" tabindex="-1" role="dialog"     aria-labelledby="exampleModalLabel"aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="exampleModalLabel">Complain</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="" class="px-4" id="complaint-form">
+                            <div class="form-group row">
+                                <label for="inputDescription">Description</label>
+                                <textarea class="form-control" name="description" 
+                                id="inputDescription" rows="5"></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit"  name="submit-complaint" id="login-btn"
+                                class="btn btn-primary">Send</button>
+                                <button type="reset" class="btn btn-secondary">Clear</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Family details modal -->
+        <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog"     aria-labelledby="exampleModalLabel"aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="exampleModalLabel">Family Details</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="details-wrapper">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Names
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">Rob</li>
+                                        <li class="list-group-item">Jacod</li>
+                                        <li class="list-group-item">Shelby</li>
+                                    </ul>
+                                </li>
+                                <li class="list-group-item">Address
+                                    <ul>
+                                        <span>
+                                            House No.30/6, Covet Gardens,<br>
+                                            Mylapore, Chennai, <br>
+                                            TN-600028
+                                        </span>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Change Password modal -->
+        <div class="modal fade" id="pwdModal" tabindex="-1" role="dialog"     aria-labelledby="exampleModalLabel1"aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="exampleModalLabel1">Change Password</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="" class="px-4" id="pwd-form">
+                            <div class="form-group">
+                                <label for="inputOldPassword">Old Password</label>
+                                <input type="password" name="oldPwd" class="form-control" id="inputOldPassword"  required>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputNewPassword">New Password</label>
+                                <input type="password" name="newNwd" class="form-control" id="inputNewPassword"  required>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword">Confirm Password</label>
+                                <input type="password" name="confirmPwd" class="form-control" id="inputConfirmPassword"  required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit"  name="submit-complaint" id="change-btn"
+                                class="btn btn-primary">Change</button>
+                                <button type="reset" class="btn btn-secondary" data-dismiss="modal">Reset</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+<script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+</script>
+
+</body>
+
+</html>
