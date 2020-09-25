@@ -12,13 +12,16 @@ const UserDetailSchema = new Schema({
     type: JSON,
     required: true,
   },
+  noofmembers: {
+    type: Number,
+    required: true  
+  },
   familymembers: {
     type: Array,
     required: true,
   },
   dailyreport: {
     type: Array,
-    required: true,
   },
 });
 export default UserDetailSchema;

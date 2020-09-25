@@ -1,3 +1,5 @@
+$("body").css("background-image", "linear-gradient(to right,#42275a,#734b6d)");
+
 let family = document.getElementById('names');
 var totalmember = []
 family.addEventListener('keyup', (e) => {
@@ -57,9 +59,22 @@ function checkfunction() {
     }
     if (isvalid == true) {
         console.log("hello");
-        $.post("/add", {
-            total: totalmember,
-            name: "test"
+        $.post("/api/admin/add", {
+            total:totalmember,
+            email: $("#Email").val(),
+            dno:$("#dno").val(),
+            street:$("#street").val(),
+            area:$("#area").val(),
+            city:$("#city").val(),
+            zip:$("#zip").val(),
+            noofmembers:$("#familyCount").val(),
+            state:$("#state").val()
+
+
+
+
+
+
         },
             function (data, status) {
                 alert(data);

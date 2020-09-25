@@ -10,14 +10,11 @@ const UserSchema = new Schema({
   password: {
     type: String,
     min: 6,
-
     required: true,
   },
-  phonenumber: {
-    type: Number,
-    unique: true,
-    min: 10,
-    max: 10,
-  },
+  password_changedon:{
+    type:Date,
+  }
+
 });
 export default UserSchema;

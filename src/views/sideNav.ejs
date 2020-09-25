@@ -12,7 +12,7 @@
       crossorigin="anonymous"
     />
     <script
-      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js" 
       integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
       crossorigin="anonymous"
     ></script>
@@ -101,32 +101,22 @@
               </tr>
             </thead>
             <tbody>
+                  <% for(i in data.readings){%>
               <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>95</td>
-                <td>98</td>
+            
+                <th scope="row"><%= Number(i)+1 %></th>
+                <td><%= data.people[i] %></td>
+                <td><%= data.readings[i]["temperature"] %></td>
+                <td><%= data.readings[i]["oxygen"] %></td>
               </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>99</td>
-                <td>95</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>94</td>
-                <td>92</td>
-              </tr>
-              <tr>
-                <th scope="row">4</th>
-                <td>Robb</td>
-                <td>99</td>
-                <td>95</td>
-              </tr>
+              <% } %>
+           
             </tbody>
           </table>
+        <label class="checkbox-inline">
+          <input type="checkbox" style="width:auto;background:navy;" id="check">
+          Do you agree that above readings are taken by our authorities by visiting your home
+        </label>
         </div>
       </div>
       <!-- Complaint modal -->
@@ -207,18 +197,20 @@
                   <li class="list-group-item">
                     Names
                     <ul class="list-group list-group-flush">
-                      <li class="list-group-item">Rob</li>
-                      <li class="list-group-item">Jacod</li>
-                      <li class="list-group-item">Shelby</li>
+                      <% for(i in data.people){ %>
+                      <li class="list-group-item"><%= data.people[i] %></li>
+                      <% } %>
                     </ul>
                   </li>
                   <li class="list-group-item">
                     Address
                     <ul>
                       <span>
-                        House No.30/6, Covet Gardens,<br />
-                        Mylapore, Chennai, <br />
-                        TN-600028
+                        <%= data.address.dno %>  <%= data.address.street %><br />
+                        <%= data.address.area %>, <br />
+                        <%= data.address.city %>-<% data.address.zip %>
+                        <%= data.address.state %>
+                          
                       </span>
                     </ul>
                   </li>
@@ -319,10 +311,20 @@
     </div>
 
     <script>
+      $("#check").click();
       $('#menu-toggle').click(function (e) {
         e.preventDefault();
         $('#wrapper').toggleClass('toggled');
       });
+      $("#check").click(function(e){
+          let ischecked = $("#check").prop("checked");
+          if(!ischecked){
+            let isconfirm =confirm("click ok if you sure that this is not your readings");
+            if(isconfirm) alert("your complaint will soon rectified");
+          }
+          console.log(ischecked);
+
+      })
     </script>
   </body>
 </html>
