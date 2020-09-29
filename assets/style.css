@@ -17,7 +17,11 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-h1 {
+nav{
+  background-color: lightcoral;
+}
+
+.My-heading {
   font-weight: 700;
   color: #384047;
   text-align: center;
@@ -35,7 +39,7 @@ a:hover {
   color: green;
 }
 
-.container {
+.My-container {
   display: flex;
   -webkit-display: box;
   -moz-display: box;
@@ -44,11 +48,11 @@ a:hover {
   flex-wrap: wrap;
   justify-content: center;
   align-content: center;
-  padding: 6%;
+  padding: 3%;
   margin: 0;
 }
 
-form {
+.My-form {
   background-color: #fff;
   padding: 2em;
   padding-bottom: 3em;
@@ -63,7 +67,7 @@ form {
   flex-wrap: wrap;
   flex-direction: column;
 }
-form input {
+.My-form input {
   color: #384047;
   background-color: #e8eeef;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03) inset;
@@ -73,7 +77,7 @@ form input {
   margin-bottom: 1.2em;
   width: 100%;
 }
-form input:focus {
+.My-form input:focus {
   outline: none;
 }
 
@@ -82,7 +86,7 @@ form input:focus {
   text-align: center;
   font-size: 19px;
   color: #fff;
-  background-color: #4bc970;
+  background-color: lightcoral;
   width: 100%;
   border: none;
   border-radius: 4px;

@@ -4,15 +4,57 @@ import {Adminlogin} from "../../middleware/validate";
 import UserDetail from "../../database/models/UserDetail";
 import Admin from "../../database/models/admin";
 import User from "../../database/models/User";
-const router = express.Router()
+const router = express.Router();
+router.get("/update",(req,res)=>{
+    return res.render("adminUpdate.ejs")
+})
+router.post("/find",async(req,res)=>{
+    let email=req.body.email;
+    try{
+        let finduser =await UserDetail.findOne({email});
+        if(finduser) return res.send(finduser);
+        return res.send("no details found")
+    }
+    catch(e){
+        console.log(e);
+
+    }
+    return res.send("some error found");
+
+
+});
+router.post("/update", async (req, res) => {
+    let email = req.body.email;
+    let dailyreports = req.body;
+    
+    let check=dailyreports["dailyreport[]"];
+    console.log(check);
+    
+ 
+
+    console.log(email);
+    let dailyreport = check;
+    try {
+        let isupdate = await UserDetail.findOneAndUpdate({ email }, { $set: { dailyreport: dailyreport } });
+        console.log(dailyreport);
+        res.send("success");
+    }
+    catch (e) {
+        return res.send(e + " error")
+    }
+})
 
 router.get("/",(req,res)=>{
-    res.render('admin.ejs');
+   if (req.cookies.areacode && req.session.areacode == req.cookies.areacode) return res.render("adminAdd.ejs")
+   console.log(req.session.areacode)
+     
+   res.render('admin.ejs');
 });
 router.post("/add",async(req,res)=>{
     if(!req.cookies.areacode && !req.session.areacode==req.cookies.areacode) return res.redirect("/api/admin")
     console.log(req.cookies);
     let user =req.body;
+    console.log(user);
     let email = user.email;
     let salt = await bcrypt.genSalt(10);
     let create_password = "CT_"+email;
@@ -26,6 +68,8 @@ router.post("/add",async(req,res)=>{
     let detail ={
         email:email,
         address:{dno:user.dno,street:user.street,area:user.area,city:user.city,zip:user.zip,state:user.state},
+        phonenumber:user.phonenumber,
+        location:user["location[]"],
         noofmembers:user.noofmembers,
         familymembers:user["total[]"]
     }
@@ -37,7 +81,7 @@ router.post("/add",async(req,res)=>{
        let isuser= await User.insertMany(userlog);
        let isuserdetail= await UserDetail.insertMany(detail);
        if(isuser && isuserdetail)
-             return res.send("user registered")
+             return res.send(true)
         return res.send("some error has been occured");
     }
     catch(e){
@@ -86,5 +130,11 @@ router.post("/",async(req,res)=>{
    
     res.send(req.body);
 });
+
+ router.get("/logout",(req,res)=>{
+     req.session.destroy();
+     res.clearCookie("areacode");
+     res.render("admin.ejs");   
+ })
 
 export default router;

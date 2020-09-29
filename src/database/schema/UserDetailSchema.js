@@ -23,5 +23,12 @@ const UserDetailSchema = new Schema({
   dailyreport: {
     type: Array,
   },
+  location:{
+    type:Array,
+  },
+  phonenumber:{
+    type:Number,
+    min:10
+  }
 });
 export default UserDetailSchema;

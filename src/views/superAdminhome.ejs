@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link rel="stylesheet" href="/assets/style.css" />
+    <link rel="stylesheet" href="/assets/simple-sidebar.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="d-flex" id="wrapper">
+      <!-- Sidenav Bar -->
+      <div class="bg-dark border-right" id="sidebar-wrapper">
+        <span class="badge badge-dark navbar-brand sidebar-heading"
+          >bindFight</span
+        >
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item bg-dark">
+            <button class="btn btn-dark btn-" id="change-pwd-btn">
+              Change Password
+            </button>
+          </li>
+          <li class="list-group-item bg-dark">
+            <button class="btn btn-dark" id="add-admin-btn">Add New Area</button>
+          </li>
+          <li class="list-group-item bg-dark">
+            <button class="btn btn-dark" id="delete-admin-btn">
+              Remove <area shape="" coords="" href="" alt="">
+            </button>
+          </li>
+          <li class="list-group-item bg-dark">
+            <button class="btn btn-dark" id="complaints-btn">
+              Complaints
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Page Content -->
+    
+      <div id="page-content-wrapper">
+          <div class="My-container" id="msg"></div><
+          
+        
+        <div class="My-container">
+          
+  
+         
+          <div class="My-form" id="change-pwd-box" style="display: none">
+            <h1 class="My-heading">Change Password</h1>
+            <div class="My-form-content">
+              <form action="" method=""id="resetpassword" onsubmit=event.preventDefault()  class="px-2" id="pwd-form">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    name="oldPwd"
+                    class="form-control"
+                    id="area"
+                    placeholder="areaname"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <input
+                    type="password"
+                    name="newNwd"
+                    class="form-control"
+                    id="NewPassword"
+                    placeholder="New Password"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <input
+                    type="password"
+                    name="confirmPwd"
+                    class="form-control"
+                    id="ConfirmPassword"
+                    placeholder="Confirm Password"
+                    required
+                  />
+                </div>
+                <button type="submit" name="submit" onclick="changepassword()" class="button">
+                  Submit
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <div class="My-form" id="add-admin-box" style="display: none">
+            <h1 class="My-heading">Add New area</h1>
+            <div class="My-form-content">
+              <form action="" onsubmit=event.preventDefault() id="addarea" method="" class="px-2" id="pwd-form">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    name="oldPwd"
+                    class="form-control"
+                    id="areacode"
+                    placeholder="Area-name"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <input
+                    type="password"
+                    name="newNwd"
+                    class="form-control"
+                    id="inputNewPassword"
+                    placeholder="New Password"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <input
+                    type="password"
+                    name="confirmPwd"
+                    class="form-control"
+                    id="inputConfirmPassword"
+                    size="25"
+                    placeholder="Confirm Password"
+                    required
+                  />
+                </div>
+                <button type="submit" onclick="newarea()" name="submit" class="button">
+                  Submit
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <div class="My-form" id="delete-admin-box" style="display: none">
+            <h1 class="My-heading">Remove area</h1>
+            <div class="My-form-content">
+              <form action="" onsubmit=event.preventDefault() method="" class="px-2" id="pwd-form">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    name="oldPwd"
+                    class="form-control"
+                    id="areaname"
+                    size="25"
+                    placeholder="areaname"
+                    required
+                  />
+                </div>
+
+                <button type="submit" onclick="deletearea()" name="submit" class="button">
+                  Submit
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <div class="container" id="complaints-box" style="display: none;"> 
+
+            <h1 class="display-4 mb-4">Complaints</h1>
+              
+            <div class="jumbotron">  <!--complaint 1 -->
+                <div class="header">Address</div><hr>
+                <div class="content">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus libero magni doloribus ipsa explicabo dolorum voluptas? Laborum totam ullam, voluptatem minima et sint debitis reiciendis doloremque rem commodi facilis quam!
+                </div>
+              </div>
+              
+              <div class="jumbotron"> <!--complaint 2 -->
+                <div class="header">Address</div><hr>
+                <div class="content">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus libero magni doloribus ipsa explicabo dolorum voluptas? Laborum totam ullam, voluptatem minima et sint debitis reiciendis doloremque rem commodi facilis quam!
+                </div>
+              </div>
+              
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script>
+      $("#change-pwd-btn").click(function () {
+        $("#change-pwd-box").show();
+        $("#add-admin-box").hide();
+        $("#delete-admin-box").hide();
+        $("#complaints-box").hide();
+      });
+
+      $("#add-admin-btn").click(function () {
+        $("#change-pwd-box").hide();
+        $("#add-admin-box").show();
+        $("#delete-admin-box").hide();
+        $("#complaints-box").hide();
+
+      });
+
+      $("#delete-admin-btn").click(function () {
+        $("#change-pwd-box").hide();
+        $("#add-admin-box").hide();
+        $("#delete-admin-box").show();
+        $("#complaints-box").hide();
+    });
+
+      
+      $("#complaints-btn").click(function () {
+        $("#change-pwd-box").hide();
+        $("#add-admin-box").hide();
+        $("#delete-admin-box").hide();
+        $("#complaints-box").show();
+
+      });
+      function newarea(){
+        let area = $("#areacode").val();
+        let password = $("#inputNewPassword").val();
+        let confirmpassword=$("#inputConfirmPassword").val();
+        console.log(area);
+        console.log(password);
+        if(area.length>1 && password.length>1){
+          if(password==confirmpassword){
+                $.post("/api/official/add",{
+                  area:area,
+                  password:password
+                },function(data,status){
+                   if(data==true){
+                     alert("registered succesfull");
+                     $("#msg").html();
+                       $("#addarea")[0].reset();
+                   }
+                   else{
+                     $("#msg").html(`<p class="alert alert-danger">${data}</p>`)
+                   
+                    }
+                })
+          }
+          else{
+            $("#msg").html(`<p class="alert alert-danger">password and confirm password should be same</p>`)
+          }
+        }
+        else{
+                      $("#msg").html(`<p class="alert alert-danger">some fields are empty</p>`)
+        }
+
+      }
+
+      function changepassword(){
+        let areacode = $("#area").val();
+        let password = $("#NewPassword").val();
+        let confirmpassword = $("#ConfirmPassword").val();
+        if(areacode.length>1 && password.length>1 && confirmpassword.length>1){
+          if(password==confirmpassword){
+            $.post("/api/official/changepassword",{
+              areacode:areacode,
+              password:password
+            },function(data,status){
+              if(data==true){
+                alert("password updated");
+                $("#msg").html();
+                $("#resetpassword")[0].reset();
+              }
+              else{
+                       $("#msg").html(`<p class="alert alert-danger">${data}</p>`)
+
+              }
+            });
+          }
+          else{
+             $("#msg").html(`<p class="alert alert-danger">password and confirm password should be same</p>`)
+
+          }
+        }
+        else{
+            $("#msg").html(`<p class="alert alert-danger">some fields are empty</p>`)
+
+        }
+      }
+
+      function deletearea(){
+             let areacode = $("#areaname").val();
+             if(areacode.length>1){
+               let confirmdelete = confirm(`do you want to delete ${areacode} permanently`);
+               if(!confirmdelete) return;
+               $.post("/api/official/delete",{
+                 areacode:areacode
+               },function(data,status){
+                 if(data == true){
+                   alert(`${areacode} deleted succesfully`);
+                 }
+                 else{
+                      $("#msg").html(`<p class="alert alert-danger">${data}</p>`)
+
+                 }
+               });
+             }
+             else{
+                $("#msg").html(`<p class="alert alert-danger">some fields are empty</p>`)
+
+             }
+      }
+    </script>
+  <script src=https://code.jquery.com/jquery-3.5.1.min.js></script>
+
+  </body>
+</html>

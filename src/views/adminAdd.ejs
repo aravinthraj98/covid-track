@@ -23,7 +23,7 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="background-color: lightcoral;">
     <span class="navbar-brand">Covid-19</span>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
@@ -39,12 +39,14 @@
       </ul>
     </div>
     <div class="btn mx-2">
-      <button class="btn btn-light mx-1">Logout</button>
+      <a href="/api/admin/update"><button class="btn btn-light mx-1">Updatereadings</button></a>
+      <a href="/api/admin/logout"><button class="btn btn-light mx-1">Logout</button></a>
     </div>
   </nav>
 
   <div class="container">
-    <form class="my-2 w-75 m-auto" id="form" onsubmit="event.preventDefault()">
+   
+    <form class="my-2 w-75 m-auto" id="form" method="post" onsubmit="event.preventDefault()">
       <div class="jumbotron mt-3">
         <p id="demo"></p>
         <div class="form-group row">
@@ -53,6 +55,12 @@
             <input type="email" class="form-control" id="Email" required />
           </div>
         </div>
+            <div class="form-group row">
+              <label for="phonenumber" class="col-sm-2 col-form-label">phone</label>
+              <div class="col-sm-10">
+                <input type="number" class="form-control" id="phonenumber" minlength="10" maxlength="10" />
+              </div>
+            </div>
 
         <fieldset class="form-group">
           <div class="row">
@@ -104,14 +112,16 @@
         <ul id="list"></ul>
       </div>
       <div class="form-group row ml-1">
-        <button onclick="checkfunction()" class="btn btn-primary">
+        <button onclick="checkfunction()" class="btn btn-primary" id="submit">
           Submit
         </button>
-        <button type="reset" class="btn ml-2 btn-secondary">Reset</button>
+        <button class="btn ml-2 btn-secondary"  onclick="getlocation();event.preventDefault();">getlocation</button>
+       
       </div>
 
 
     </form>
+   
 
   </div>
   <script src="/assets/js/adminvalidate.js"></script>

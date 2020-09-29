@@ -1,36 +1,52 @@
 import express from "express"
 import sendmail from "../../utils/nodemailer"
 import UserDetail from "../../database/models/UserDetail"
+import getuserdetail from "../../services/getuserdetail"
 import User from  "../../database/models/User"
 import bcrypt from "bcrypt"
 const router =express.Router();
-router.get("/update",async(req,res)=>{
-      let email="aravinthraj1972@gmail.com"
-      let dailyreport =[{temperature:"101",oxygen:"97"}];
-      try{
-      let isupdate=await UserDetail.findOneAndUpdate({email},{$set:{dailyreport:dailyreport}});
-      console.log(dailyreport);
-      res.send("success");
-}
-      catch(e){
-          return res.send(e+" error")
-      }
-})
+
 
 router.get("/",async(req,res)=>{
+    if(req.session.email && req.cookies.email == req.session.email){
+         let data = await getuserdetail(req.session.email);
+         return res.render('sideNav.ejs', {
+           data: data,
+         });
+    }
     res.render('index.ejs');
 });
 
 
-router.post("/login",async(req,res)=>{
+router.post("/",async(req,res)=>{
    let email =req.body.email;
  try{
      let getuser = await User.findOne({ email });
      if (getuser) {
          let ismatch = await bcrypt.compare(req.body.password, getuser.password)
-         let getdetails = await UserDetail.findOne({email})
-         console.log(getdetails.address);
-         if (ismatch) return res.render("sideNav.ejs",{data:{"readings":getdetails.dailyreport,"people":getdetails.familymembers,"address":getdetails.address}});
+         if(ismatch){
+              res.cookie("email",email);
+              req.session.email=email;
+              let data=await getuserdetail(email);
+              console.log(data);
+              return res.render('sideNav.ejs', {
+                data:data
+              });
+         }
+        
+             
+        //  let getdetails = await UserDetail.findOne({email})
+        //  console.log(getdetails.address);
+        //  let temp=[];
+        //  let oxy = [];
+        //  let readings = getdetails.dailyreport;
+        //  for(let i in readings){
+        //      let read=JSON.parse(readings[i]);
+        //      temp.push(read.temperature);
+        //      oxy.push(read.oxygen)
+        //  }
+        //  console.log(temp)
+        //  if (ismatch) 
      }
  }
  catch(e){
@@ -46,6 +62,8 @@ router.post("/login",async(req,res)=>{
         data:{"msg":"username or password wrong"}
     });
 });
+
+
 router.post("/changepassword",async(req,res)=>{
     
 
@@ -93,4 +111,10 @@ router.post("/changepassword",async(req,res)=>{
 
 
 });
+
+router.get("/logout",(req,res)=>{
+    req.session.destroy();
+    res.clearCookie("email");
+    res.render("index.ejs");
+})
 export default router;
