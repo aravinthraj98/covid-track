@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -17,7 +16,22 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
-    <link href="/assets/style.css" rel=stylesheet>
+    <!-- <link href="/assets/style.css" rel=stylesheet> -->
+    <style>
+    @media screen and (min-width: 768px) {
+        .modal-dialog {
+          width: 700px; /* New width for default modal */
+        }
+        .modal-sm {
+          width: 350px; /* New width for small modal */
+        }
+    }
+    @media screen and (min-width: 992px) {
+        .modal-lg {
+          width: 950px; /* New width for large modal */
+        }
+    }
+</style>
 </head>
 
 <body>
@@ -29,19 +43,50 @@
                     <a class="nav-link" href="#">Home</a>
                 </li>
             </ul>
-            <p class="form-inline my-2 my-lg-0 p-1">
-                <input class="form-control mr-sm-2" size="25" id="email" type="search" placeholder="Search"
-                    aria-label="Search">
-                <button class="btn btn-outline-dark my-2 my-sm-0" id="search">Search</button>
-            </p>
+            <button class="btn btn-light my-2 my-sm-0" data-toggle="modal" data-target="#updateStatusModal" id="seestatus">Update Status</button>
         </div>
     </nav>
 
+    <!-- Update Status Modal -->
+    <div class="modal fade" id="updateStatusModal" tabindex="-1" role="dialog"     aria-labelledby="exampleModalLabel"aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="My-container">
+                    <table class="table table-striped my-3">
+                    <thead style="background-color:lightcoral">
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodi">
 
-    <div class="container jumbotron w-75 mt-3">
-        <h1 class="display-4">Update Data</h1>
+                        
+                    </tbody>
+                    </table>
+                    <div class="modal-footer">
+                            <button type="button" id="close" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div class="container jumbotron  mt-3" style="width:75%;">
+        <h1 class="display-4">Update Readings</h1>
         <hr class="my-3">
-        <table class="table table-striped">
+        <div class="form-inline my-lg-0 p-1">
+                <input class="form-control mr-sm-2"  id="email" type="search" placeholder="Search"
+                    aria-label="Search">
+                <button class="btn btn-info my-2 px-4 my-sm-0" id="search">Search</button>
+        </div>
+        <table class="table table-striped my-3">
             <thead style="background-color:lightcoral">
                 <tr>
                     <th scope="col">Name</th>
@@ -53,11 +98,12 @@
                 <tr>
                     <td>Thomas Shelby</td>
                     <td>
-                        <input type="number" class="form-control" id="oxygen1">
+                        <input type="number" class="form-control"  id="oxygen1">
                     </td>
                     <td>
-                        <input type="number" class="form-control" id="temp1">
+                        <input type="number" class="form-control"   id="temp1">
                     </td>
+                 
                 </tr>
                
             </tbody>
@@ -79,12 +125,12 @@
 
             }, function (data, status) {
                if(typeof data=="object"){
-                  $("tbody").html("");
+                  $("#tbody").html("");
                   const email =data.email;
                  familymembers=data.familymembers;
                  
                   for(i in familymembers){
-                       let tdata = $("tbody").html();
+                       let tdata = $("#tbody").html();
                        let o="O"+i;
                        let data=`<tr><td>
                            ${familymembers[i]}</td>
@@ -95,7 +141,7 @@
                         <input type="number" class="form-control" id=${i} required>
                     </td></tr>`
                       
-                    $("tbody").html(`${tdata}${data}`);
+                    $("#tbody").html(`${tdata}${data}`);
                   }
                    
                }
@@ -130,13 +176,80 @@
                     email:email,
                     dailyreport:readings
                 },function(data,status){
-                    alert(data);
+                  alert(data)
                 })
 
 
             })
 
         });
+        $("#seestatus").click(function(){
+            $.post("/api/admin/getcases",{},function(data,status){
+                console.log(data)
+                 $("#tbodi").html("");
+                
+                 for (i in data) {
+                    let tdata = $("#tbodi").html();
+                    let nameid = "n-"+i;
+                    let pid = "p-"+i;
+                    console.log(pid);
+                
+                    let id = String(data[i]._id);
+                    console.log(id);
+                    let datas = `<tr>
+                            <td id=${nameid} value=${data[i]._id}>${data[i].name}</td>
+                            <td>
+                               ${data[i].address.dno}${data[i].address.street}<br>
+                               ${data[i].area}
+                            </td>
+                            <td>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id=${pid} >
+                                    <label class="form-check-label" for="inlineRadio1">Positive</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" checked>
+                                    <label class="form-check-label" for="inlineRadio2" >Negative</label>
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn btn-primary" onclick=update(${i}) id=b${i} value=${data[0]._id}>Update</button>
+                            </td>
+                        </tr>`
+                    $("#tbodi").html(`${tdata}${datas}`)
+                }
+                
+            });
+
+        });
+
+       function update(i){
+          let b = "b"+i;
+          let check = $(`#${b}`).val()
+          console.log($(`#p-${i}`).is(":checked"));
+          console.log(`#p-${i}`);
+          let positive = false;
+
+          if($(`#p-${i}`).is(":checked")){
+            positive=true;
+          }
+            $.post("/api/admin/testreport", {
+               _id: check,
+               positive: positive
+           },function(data,status){
+               if(data=="true" || data == true){
+                   alert("test report updated");
+                    $("#close").click();
+               }
+               else{
+                   alert(data);
+               }
+              
+           })
+         
+           
+          
+       }
 
 
     </script>

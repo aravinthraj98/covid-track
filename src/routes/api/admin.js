@@ -4,7 +4,11 @@ import {Adminlogin} from "../../middleware/validate";
 import UserDetail from "../../database/models/UserDetail";
 import Admin from "../../database/models/admin";
 import User from "../../database/models/User";
+import virustest from "../../database/models/virustest"
+import Viruscases from "../../database/models/viruscases";
 const router = express.Router();
+const temp_level=99;
+const oxy_level =95;
 router.get("/update",(req,res)=>{
     return res.render("adminUpdate.ejs")
 })
@@ -37,6 +41,20 @@ router.post("/update", async (req, res) => {
     try {
         let isupdate = await UserDetail.findOneAndUpdate({ email }, { $set: { dailyreport: dailyreport } });
         console.log(dailyreport);
+        for(let i in dailyreport){
+            let report = JSON.parse(dailyreport[i]);
+            if(report.temperature>temp_level || report.oxygen<oxy_level){
+                let newcase = {
+                    name:isupdate.familymembers[i],
+                    address:isupdate.address,
+                    email:isupdate.email,
+                    area:isupdate.address.area
+                }
+                let ispresent = await virustest.findOne(newcase);
+                if(!ispresent)
+                await virustest.insertMany(newcase);
+            }
+        }
         res.send("success");
     }
     catch (e) {
@@ -135,6 +153,40 @@ router.post("/",async(req,res)=>{
      req.session.destroy();
      res.clearCookie("areacode");
      res.render("admin.ejs");   
+ });
+
+ router.post("/getcases",async(req,res)=>{
+     let area = req.cookies.areacode;
+     let cases = await virustest.find({area});
+     res.send(cases);
+ });
+
+ router.post("/testreport",async(req,res)=>{
+     let _id = req.body._id;
+     let ispositive = req.body.positive;
+     try{
+     let deletes = await virustest.findByIdAndDelete({_id});
+     console.log(deletes.name);
+     if(ispositive) {
+         let newcase ={
+             name:deletes.name,
+             email:deletes.email,
+             street:deletes.address.street,
+             area:deletes.area,
+             address:deletes.address
+         }
+         let ispresent = await Viruscases.findOne(newcase);
+         if(!ispresent)
+           await Viruscases.insertMany(newcase);
+     }
+     
+     console.log(_id);
+     res.send(true)
+    }
+    catch(e){
+        console.log(e);
+        res.send("someerror occurred");
+    }
  })
 
 export default router;

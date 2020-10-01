@@ -4,6 +4,7 @@ import UserDetail from "../../database/models/UserDetail"
 import getuserdetail from "../../services/getuserdetail"
 import User from  "../../database/models/User"
 import bcrypt from "bcrypt"
+import viruscases from "../../database/models/viruscases"
 const router =express.Router();
 
 
@@ -111,6 +112,23 @@ router.post("/changepassword",async(req,res)=>{
 
 
 });
+router.post("/getcases",async(req,res)=>{
+    let findcase =req.body;
+    try{
+        let data = await viruscases.find(findcase);
+        let address =[]
+        for(let i in data){
+            address.push(data[i].address);
+        }
+        console.log(address);
+        return res.send(address);
+    }
+    catch(e){
+        console.log(e)
+    }
+
+    res.send("some error occurred");
+})
 
 router.get("/logout",(req,res)=>{
     req.session.destroy();

@@ -76,6 +76,17 @@
               </i>
             </div></a
           >
+          <a onclick="getcases()"
+            href=""
+            data-toggle="modal"
+            data-target="#casesModal"
+            class="list-group-item list-group-item-action bg-dark"
+            ><div class="mycolor">
+              <i class="fa fa-exclamation-triangle " style="font-size: 18px">
+                <span class="ml-2">Total Cases</span>
+              </i>
+            </div></a
+          >
           <a href="/api/user/logout" class="list-group-item list-group-item-action bg-dark"
             ><div class="mycolor">
               <i class="fa fa-sign-out" style="font-size: 18px">
@@ -97,6 +108,49 @@
             ></i>
           </button>
         </nav>
+
+        <!-- Total Cases Modal -->
+        <div
+        class="modal fade"
+        id="casesModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="exampleModalLabel">Cases Around You</h4>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+           <p class="alert alert-warning">TOTAL CASES  :<i id="noofcases">0</i></p>
+            <ul class="list-group list-group-flush" id="caselist">
+             NO CASES
+             
+            </ul>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
 
         <div class="container jumbotron w-75 my-2">
           <h1 class="display-4">Your Readings</h1>
@@ -323,6 +377,44 @@
     </div>
 
     <script>
+      function getcases(){
+       $.post('/api/user/getcases',{
+         street:`<%= data.address.street %>`,
+         area:`<%= data.address.area %>`
+         
+       },function(data,status){
+         if(data){
+           $("#caselist").html("");
+           $("#noofcases").html(data.length);
+          
+           for(i in data){
+              let tdata = $("#caselist").html();
+              let isyouraddress="You have nearest cases please be safe";
+              let cl= "alert alert-info"
+              console.log(`<%= data.address %>`);
+              let tdata1;
+               if(data[i].dno == `<%= data.address.dno %>`){
+                 isyouraddress = "the test result is came for You is positive please you are requested to be under quarantine"
+                   tdata1 = `<li class="list-group-item" style="background-color:red;">${isyouraddress}</li>`;
+               }
+               else{
+                   tdata1 = `<li class="list-group-item" >${isyouraddress}<br>${data[i].dno} ${data[i].street}<br>
+              ${data[i].area}</li>`;
+               }
+
+            
+               $("#caselist").html(`${tdata}${tdata1}`);
+
+
+             
+
+           }
+
+         }
+
+       
+       });
+      }
       $('#detail').hide();
         $('#changepassword').hide();
       $('#profile').click(function () {
@@ -344,6 +436,8 @@
         }
         console.log(ischecked);
       });
+     
     </script>
+    <script src=https://code.jquery.com/jquery-3.5.1.min.js></script>
   </body>
 </html>
