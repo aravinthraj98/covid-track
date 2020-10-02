@@ -3,15 +3,15 @@ import nodemailer from "nodemailer"
 let transporter = nodemailer.createTransport({
     service:"gmail",
     auth:{
-        user:"getofficialmails2020@gmail.com",
-        pass:"officialmail"
+        user:process.env.email,
+        pass:process.env.pass
     }
 });
 export default async(mail,text)=>{
 let mailOptions={
-    from:"getofficialmails2020@gmail.com",
+    from: process.env.email,
     to:mail,
-    subject:"request",
+    subject:"From Covid tracker officials",
     text:text
 }
 transporter.sendMail(mailOptions,(error,info)=>{

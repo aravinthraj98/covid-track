@@ -6,10 +6,14 @@ import Admin from "../../database/models/admin";
 import User from "../../database/models/User";
 import virustest from "../../database/models/virustest"
 import Viruscases from "../../database/models/viruscases";
+import sendmail from "../../utils/nodemailer"
 const router = express.Router();
 const temp_level=99;
 const oxy_level =95;
 router.get("/update",(req,res)=>{
+    if (!req.cookies.areacode || !req.session.areacode == req.cookies.areacode)
+            return res.render("admin.ejs");
+
     return res.render("adminUpdate.ejs")
 })
 router.post("/find",async(req,res)=>{
@@ -69,7 +73,7 @@ router.get("/",(req,res)=>{
    res.render('admin.ejs');
 });
 router.post("/add",async(req,res)=>{
-    if(!req.cookies.areacode && !req.session.areacode==req.cookies.areacode) return res.redirect("/api/admin")
+    if(!req.cookies.areacode || !req.session.areacode==req.cookies.areacode) return res.send("your session has expired please login again");
     console.log(req.cookies);
     let user =req.body;
     console.log(user);
@@ -91,11 +95,14 @@ router.post("/add",async(req,res)=>{
         noofmembers:user.noofmembers,
         familymembers:user["total[]"]
     }
+    
     console.log(detail);
     console.log(email);
     const userfind = await UserDetail.findOne({email});
     if(userfind) return res.send("user already present");
     try{
+        let text = `Welcome to covid track application your family has been registerd and your\n \npassword is ${create_password} you can change your password after login and also check your your profile whether your details are correct if not than complaint via the same app in \n complaint section`
+        await sendmail(email,text)
        let isuser= await User.insertMany(userlog);
        let isuserdetail= await UserDetail.insertMany(detail);
        if(isuser && isuserdetail)
@@ -166,8 +173,11 @@ router.post("/",async(req,res)=>{
      let ispositive = req.body.positive;
      try{
      let deletes = await virustest.findByIdAndDelete({_id});
-     console.log(deletes.name);
+     console.log(deletes);
      if(ispositive) {
+
+        
+
          let newcase ={
              name:deletes.name,
              email:deletes.email,
@@ -175,6 +185,8 @@ router.post("/",async(req,res)=>{
              area:deletes.area,
              address:deletes.address
          }
+         let text = newcase.name +" has been tested as positive our frontline workers will reach you soon please be under quarantine";
+         await sendmail(newcase.email,text);
          let ispresent = await Viruscases.findOne(newcase);
          if(!ispresent)
            await Viruscases.insertMany(newcase);

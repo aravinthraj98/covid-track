@@ -4,9 +4,33 @@ import bcrypt from "bcrypt"
 import official from "../../database/models/official"
 const router = express.Router();
 
- 
+ router.post("/",async(req,res)=>{
+      try{
+          let admin={
+              adminid:req.body.adminid,
+               }
+          let adminfind =await official.findOne(admin);
+          let ispassword = await bcrypt.compare(req.body.password,adminfind.password);
+          if(ispassword){
+              req.session.admin = req.body.adminid;
+              res.cookie("admin", req.body.adminid)
+              return res.render("superAdminhome.ejs")
+          }
+          else{
+              return res.render("admin.ejs",{msg:{"text":"username or password mismatch"}});
+          }
+      }
+      catch(e){
+          console.log(e);
+          return res.render("admin.ejs", { msg: { "text": "someerror occured" } });
+      }
+ });
+
  router.get("/", async (req,res)=>{
-   res.render("superAdminhome.ejs");
+     if (req.cookies.admin && req.session.admin == req.cookies.areacode) 
+             return res.render("superAdminhome.ejs");
+     return res.render("admin.ejs", { msg: { "text": "session expired login again" } });
+        
  });
  router.post("/add",async(req,res)=>{
      let areacode = req.body.area;
