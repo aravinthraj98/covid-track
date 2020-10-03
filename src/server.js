@@ -32,7 +32,10 @@ app.use(session({
   cookie: { expires: 60*60*1000 }  // Approximately Friday, 31 Dec 9999 23:59:59 GMT
 })) 
 if(process.env.NODE_ENV === "production"){
-  app.use(express.static("src/build"));
+  app.use(express.static("build"));
+  app.get("*",(req,res)=>{
+    res.sendfile(path.resolve(__dirname,"build",index.html))
+  })
   app.use('/assets', express.static('assets'));
 }
 // app.get('/login', (req, res) => {
