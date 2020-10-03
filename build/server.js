@@ -32,6 +32,7 @@ var _env = require("./config/env");
 // let date1 =new Date();
 // date1.setDate(date1.getDate()-10);
 // console.log(date1.toLocaleDateString())
+var port = _env.PORT || 3003 || 3330 || 4342;
 var app = (0, _express["default"])();
 app.use('/assets', _express["default"]["static"]('assets')); //src need check
 
@@ -55,7 +56,7 @@ if (process.env.NODE_ENV === "production") {
   app.use('/assets', _express["default"]["static"]('assets'));
   app.set('views', _path["default"].join(__dirname, 'views'));
   app.get("*", function (req, res) {
-    res.sendfile(_path["default"].resolve(__dirname, "build", index.html));
+    res.render("index.ejs");
   });
 } // app.get('/login', (req, res) => {
 //   res.render('sideNav.ejs');
@@ -65,7 +66,7 @@ if (process.env.NODE_ENV === "production") {
 app.use(function (req, res) {
   res.render("error.ejs");
 });
-app.listen(_env.PORT, function () {
+app.listen(port, function () {
   (0, _index.connectDB)();
   console.log("api running -> http://localhost:".concat(_env.PORT));
 });
