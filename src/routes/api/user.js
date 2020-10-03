@@ -29,7 +29,7 @@ router.post("/",async(req,res)=>{
               res.cookie("email",email);
               req.session.email=email;
               let data=await getuserdetail(email);
-              console.log(data);
+            //   console.log(data);
               return res.render('sideNav.ejs', {
                 data:data
               });
@@ -120,7 +120,7 @@ router.post("/getcases",async(req,res)=>{
         for(let i in data){
             address.push(data[i].address);
         }
-        console.log(address);
+        // console.log(address);
         return res.send(address);
     }
     catch(e){

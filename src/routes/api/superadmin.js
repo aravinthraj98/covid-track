@@ -39,7 +39,7 @@ const router = express.Router();
         try{
             let salt = await bcrypt.genSalt(10);
             let password = await bcrypt.hash(req.body.password,salt);
-            console.log(password);
+            // console.log(password);
             let newarea={
                 areacode:areacode,
                 password:password

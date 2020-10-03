@@ -36,15 +36,15 @@ router.post("/update", async (req, res) => {
     let dailyreports = req.body;
     
     let check=dailyreports["dailyreport[]"];
-    console.log(check);
+    // console.log(check);
     
  
 
-    console.log(email);
+    // console.log(email);
     let dailyreport = check;
     try {
         let isupdate = await UserDetail.findOneAndUpdate({ email }, { $set: { dailyreport: dailyreport } });
-        console.log(dailyreport);
+        // console.log(dailyreport);
         for(let i in dailyreport){
             let report = JSON.parse(dailyreport[i]);
             if(report.temperature>temp_level || report.oxygen<oxy_level){
@@ -68,15 +68,15 @@ router.post("/update", async (req, res) => {
 
 router.get("/",(req,res)=>{
    if (req.cookies.areacode && req.session.areacode == req.cookies.areacode) return res.render("adminAdd.ejs")
-   console.log(req.session.areacode)
+//    console.log(req.session.areacode)
      
    res.render('admin.ejs');
 });
 router.post("/add",async(req,res)=>{
     if(!req.cookies.areacode || !req.session.areacode==req.cookies.areacode) return res.send("your session has expired please login again");
-    console.log(req.cookies);
+    // console.log(req.cookies);
     let user =req.body;
-    console.log(user);
+    // console.log(user);
     let email = user.email;
     let salt = await bcrypt.genSalt(10);
     let create_password = "CT_"+email;
@@ -96,8 +96,8 @@ router.post("/add",async(req,res)=>{
         familymembers:user["total[]"]
     }
     
-    console.log(detail);
-    console.log(email);
+    // console.log(detail);
+    // console.log(email);
     const userfind = await UserDetail.findOne({email});
     if(userfind) return res.send("user already present");
     try{
@@ -173,7 +173,7 @@ router.post("/",async(req,res)=>{
      let ispositive = req.body.positive;
      try{
      let deletes = await virustest.findByIdAndDelete({_id});
-     console.log(deletes);
+    //  console.log(deletes);
      if(ispositive) {
 
         
@@ -192,7 +192,7 @@ router.post("/",async(req,res)=>{
            await Viruscases.insertMany(newcase);
      }
      
-     console.log(_id);
+    //  console.log(_id);
      res.send(true)
     }
     catch(e){

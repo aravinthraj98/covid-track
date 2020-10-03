@@ -28,16 +28,19 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(cookieparser());
 app.use(session({
-  secret: "hello",
+  secret: "login",
   cookie: { expires: 60*60*1000 }  // Approximately Friday, 31 Dec 9999 23:59:59 GMT
 })) 
-
+if(process.env.NODE_ENV === "production"){
+  app.use(express.static("src/build"));
+  app.use('/assets', express.static('assets'));
+}
 // app.get('/login', (req, res) => {
 //   res.render('sideNav.ejs');
 setRoutes(app);  
 
 app.use((req, res) => {
-  res.send('no url');
+  res.render("error.ejs");
 });
 
 app.listen(PORT, () => {
