@@ -38,7 +38,7 @@ if(process.env.NODE_ENV === "production"){
   app.use('/assets', express.static('assets'));
   app.set('views', path.join(__dirname, '../views'));
   app.get("*",(req,res)=>{
-  res.render("index.ejs");
+  res.sendFile(path.resolve(__dirname,"build","index.html"))
   })
   
 }
