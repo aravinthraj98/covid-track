@@ -24,7 +24,7 @@ app.use('/assets', express.static('assets')); //src need check
 
 app.set('view engine', 'ejs');
 
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '../views'));
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(cookieparser());
 app.use(session({
