@@ -33,8 +33,7 @@ app.use(session({
   cookie: { expires: 60*60*1000 }  // Approximately Friday, 31 Dec 9999 23:59:59 GMT
 })) 
 if(process.env.NODE_ENV === "production"){
- 
-  
+
   app.set('view engine', 'ejs');
   app.use('/assets', express.static('assets'));
   app.set('views', path.join(__dirname, '../views'));
@@ -46,6 +45,9 @@ if(process.env.NODE_ENV === "production"){
       cookie: { expires: 60 * 60 * 1000 }, // Approximately Friday, 31 Dec 9999 23:59:59 GMT
     })
   ); 
+  app.get("*",(req,res)=>{
+    res.redirect("/api/user")
+  });
  
    setRoutes(app); 
    
