@@ -45,7 +45,7 @@ if(process.env.NODE_ENV === "production"){
       cookie: { expires: 60 * 60 * 1000 }, // Approximately Friday, 31 Dec 9999 23:59:59 GMT
     })
   ); 
-  app.get("*",(req,res)=>{
+  app.use("*",(req,res)=>{
     res.redirect("/api/user")
   });
  
@@ -55,10 +55,7 @@ app.use((req, res) => {
   res.render('error.ejs');
 });
 
-app.listen(port, () => {
-  connectDB();
-  console.log(`api running -> http://localhost:${PORT}`);
-});
+
   
 }
 // app.get('/login', (req, res) => {
