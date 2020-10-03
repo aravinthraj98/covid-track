@@ -19,6 +19,7 @@ import { PORT } from './config/env';
 // let date1 =new Date();
 // date1.setDate(date1.getDate()-10);
 // console.log(date1.toLocaleDateString())
+const port = PORT || 3003 || 3330 || 4342
 const app = express();
 app.use('/assets', express.static('assets')); //src need check
 
@@ -49,7 +50,7 @@ app.use((req, res) => {
   res.render("error.ejs");
 });
 
-app.listen(PORT, () => {
+app.listen(port, () => {
   connectDB();
   console.log(`api running -> http://localhost:${PORT}`);
 });
