@@ -54,7 +54,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(_express["default"]["static"]("build"));
   app.set('view engine', 'ejs');
   app.use('/assets', _express["default"]["static"]('assets'));
-  app.set('views', _path["default"].join(__dirname, 'views'));
+  app.set('views', _path["default"].join(__dirname, '../views'));
   app.get("*", function (req, res) {
     res.render("index.ejs");
   });
