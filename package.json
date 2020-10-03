@@ -28,7 +28,8 @@
     "clean": "rm -rf ./build",
     "build": "npm run clean && babel ./src -d ./build",
     "start": "node ./build/server.js",
-    "build:start": "npm run build && npm start"
+    "build:start": "npm run build && npm start",
+    "heroku-postbuild":"NPM_CONFIG_PRODUCTION=FALSE npm install && npm run build"
   },
   "author": "",
   "license": "ISC"
