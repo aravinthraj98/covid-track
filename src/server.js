@@ -33,10 +33,13 @@ app.use(session({
 })) 
 if(process.env.NODE_ENV === "production"){
   app.use(express.static("build"));
+  app.set('view engine', 'ejs');
+  app.use('/assets', express.static('assets'));
+  app.set('views', path.join(__dirname, 'views'));
   app.get("*",(req,res)=>{
     res.sendfile(path.resolve(__dirname,"build",index.html))
   })
-  app.use('/assets', express.static('assets'));
+  
 }
 // app.get('/login', (req, res) => {
 //   res.render('sideNav.ejs');

@@ -51,10 +51,12 @@ app.use((0, _expressSession["default"])({
 
 if (process.env.NODE_ENV === "production") {
   app.use(_express["default"]["static"]("build"));
+  app.set('view engine', 'ejs');
+  app.use('/assets', _express["default"]["static"]('assets'));
+  app.set('views', _path["default"].join(__dirname, 'views'));
   app.get("*", function (req, res) {
     res.sendfile(_path["default"].resolve(__dirname, "build", index.html));
   });
-  app.use('/assets', _express["default"]["static"]('assets'));
 } // app.get('/login', (req, res) => {
 //   res.render('sideNav.ejs');
 
