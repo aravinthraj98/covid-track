@@ -33,13 +33,30 @@ app.use(session({
   cookie: { expires: 60*60*1000 }  // Approximately Friday, 31 Dec 9999 23:59:59 GMT
 })) 
 if(process.env.NODE_ENV === "production"){
-  setRoutes(app); 
-  app.use(express.static("build"));
+ 
+  
   app.set('view engine', 'ejs');
   app.use('/assets', express.static('assets'));
   app.set('views', path.join(__dirname, '../views'));
+  app.use(bodyparser.urlencoded({ extended: false }));
+  app.use(cookieparser());
+  app.use(
+    session({
+      secret: 'login',
+      cookie: { expires: 60 * 60 * 1000 }, // Approximately Friday, 31 Dec 9999 23:59:59 GMT
+    })
+  ); 
  
    setRoutes(app); 
+   
+app.use((req, res) => {
+  res.render('error.ejs');
+});
+
+app.listen(port, () => {
+  connectDB();
+  console.log(`api running -> http://localhost:${PORT}`);
+});
   
 }
 // app.get('/login', (req, res) => {
