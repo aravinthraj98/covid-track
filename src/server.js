@@ -33,13 +33,13 @@ app.use(session({
   cookie: { expires: 60*60*1000 }  // Approximately Friday, 31 Dec 9999 23:59:59 GMT
 })) 
 if(process.env.NODE_ENV === "production"){
+  setRoutes(app); 
   app.use(express.static("build"));
   app.set('view engine', 'ejs');
   app.use('/assets', express.static('assets'));
   app.set('views', path.join(__dirname, '../views'));
-  app.get("*",(req,res)=>{
-  res.sendFile(path.resolve(__dirname,"build","index.html"))
-  })
+ 
+   setRoutes(app); 
   
 }
 // app.get('/login', (req, res) => {
