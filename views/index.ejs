@@ -74,7 +74,7 @@
   <script>
     let map;
     let isloc =false;
- 
+    var latitude = 12.2253,longitude= 79.0747;
      async function initMap() {
         map = await new google.maps.Map(document.getElementById('map'), {
           center: { lat: Number(latitude), lng: Number(longitude) },
@@ -89,10 +89,7 @@
        async function getLatLon(position) {
          latitude = position.coords.latitude;
          longitude = position.coords.longitude;
-           map = new google.maps.Map(document.getElementById('map'), {
-           center: { lat: Number(latitude), lng: Number(longitude) },
-           zoom: 9
-         });
+         
 
           addmarker(13.023335, 80.218536);
          for (let i = 0; i < e.length; i++) {
