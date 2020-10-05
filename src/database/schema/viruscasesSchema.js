@@ -1,14 +1,16 @@
+import { number } from 'joi';
 import { Schema } from 'mongoose';
 const Viruscases = new Schema({
+   
     name:{
         type:String,
         required:true,
-        default:"*******"
+        
     },
     email:{
         type:String,
         required:true,
-        default:""
+       
 
     },
     street: {

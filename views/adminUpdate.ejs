@@ -3,8 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Admin Update</title>
 
+
+    <!-- <link href="/assets/style.css" rel=stylesheet> -->
+    <style>
+        @media screen and (min-width: 768px) {
+            .modal-dialog {
+                width: 700px;
+                /* New width for default modal */
+            }
+
+            .modal-sm {
+                width: 350px;
+                /* New width for small modal */
+            }
+        }
+
+        @media screen and (min-width: 992px) {
+            .modal-lg {
+                width: 950px;
+                /* New width for large modal */
+            }
+        }
+
+        @media only screen and (max-width: 767px) {
+            .display-4 {
+                font-size: 45px;
+            }
+
+            table {
+                font-size: 15px;
+            }
+        }
+    </style>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -16,59 +48,50 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
-    <!-- <link href="/assets/style.css" rel=stylesheet> -->
-    <style>
-    @media screen and (min-width: 768px) {
-        .modal-dialog {
-          width: 700px; /* New width for default modal */
-        }
-        .modal-sm {
-          width: 350px; /* New width for small modal */
-        }
-    }
-    @media screen and (min-width: 992px) {
-        .modal-lg {
-          width: 950px; /* New width for large modal */
-        }
-    }
-</style>
 </head>
 
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: lightcoral;">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="/api/admin/">Home</a>
                 </li>
             </ul>
-            <button class="btn btn-light my-2 my-sm-0" data-toggle="modal" data-target="#updateStatusModal" id="seestatus">Update Status</button>
+            <button class="btn btn-light my-2 my-sm-0" data-toggle="modal" data-target="#updateStatusModal"
+                id="seestatus">Update Status</button>
         </div>
     </nav>
 
     <!-- Update Status Modal -->
-    <div class="modal fade" id="updateStatusModal" tabindex="-1" role="dialog"     aria-labelledby="exampleModalLabel"aria-hidden="true">
+    <div class="modal fade" id="updateStatusModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="My-container">
-                    <table class="table table-striped my-3">
-                    <thead style="background-color:lightcoral">
-                        <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Address</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbodi">
+                        <table class="table table-striped my-3">
+                            <thead style="background-color:lightcoral">
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbodi">
 
-                        
-                    </tbody>
-                    </table>
-                    <div class="modal-footer">
-                            <button type="button" id="close" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                            </tbody>
+                        </table>
+                        <div class="modal-footer">
+                            <button type="button" id="close" class="btn btn-secondary"
+                                data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
@@ -76,47 +99,49 @@
         </div>
     </div>
 
-    
+
 
     <div class="container jumbotron  mt-3" style="width:75%;">
         <h1 class="display-4">Update Readings</h1>
         <hr class="my-3">
-        <div class="form-inline my-lg-0 p-1">
-                <input class="form-control mr-sm-2"  id="email" type="search" placeholder="Search"
-                    aria-label="Search">
-                <button class="btn btn-info my-2 px-4 my-sm-0" id="search">Search</button>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username"
+                aria-describedby="button-addon2" id="email">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button" id="search">Submit</button>
+            </div>
         </div>
         <table class="table table-striped my-3">
             <thead style="background-color:lightcoral">
                 <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Oxygen(%)</th>
-                    <th scope="col">Temperature(F)</th>
+                    <th scope="col">Temp(F)</th>
                 </tr>
             </thead>
             <tbody id="tbody">
                 <tr>
                     <td>Thomas Shelby</td>
                     <td>
-                        <input type="number" class="form-control"  id="oxygen1">
+                        <input type="number" class="form-control" id="oxygen1">
                     </td>
                     <td>
-                        <input type="number" class="form-control"   id="temp1">
+                        <input type="number" class="form-control" id="temp1">
                     </td>
-                 
+
                 </tr>
-               
+
             </tbody>
         </table>
 
         <div class="btn">
-            <button id="update"class="btn btn-danger">Update</button>
+            <button id="update" class="btn btn-primary">Update</button>
             <button type="reset" class="btn btn-secondary ml-1">Clear</button>
         </div>
     </div>
     <script>
         var familymembers;
-        
+
         $("#search").click(function () {
             let email = $("#email").val();
             if (email.length < 4) return;
@@ -124,15 +149,15 @@
                 email: email
 
             }, function (data, status) {
-               if(typeof data=="object"){
-                  $("#tbody").html("");
-                  const email =data.email;
-                 familymembers=data.familymembers;
-                 
-                  for(i in familymembers){
-                       let tdata = $("#tbody").html();
-                       let o="O"+i;
-                       let data=`<tr><td>
+                if (typeof data == "object") {
+                    $("#tbody").html("");
+                    const email = data.email;
+                    familymembers = data.familymembers;
+
+                    for (i in familymembers) {
+                        let tdata = $("#tbody").html();
+                        let o = "O" + i;
+                        let data = `<tr><td>
                            ${familymembers[i]}</td>
                              <td>
                         <input type="number" class="form-control" id=${o} required>
@@ -140,26 +165,27 @@
                     <td>
                         <input type="number" class="form-control" id=${i} required>
                     </td></tr>`
-                      
-                    $("#tbody").html(`${tdata}${data}`);
-                  }
-                   
-               }
-               else{
-                   alert("no");
-               }
+
+                        $("#tbody").html(`${tdata}${data}`);
+                    }
+
+                }
+                else {
+                    alert("no");
+                }
             });
-            $("#update").click(function(){
-                let readings =[]
+            $("#update").click(function () {
+                let readings = []
+                readings.push("{}");
                 let isempty = false;
-                for(i=0;i<familymembers.length;i++){
-                    let o="O"+i;
+                for (i = 0; i < familymembers.length; i++) {
+                    let o = "O" + i;
                     let temp = $(`#${i}`).val();
                     let oxy = $(`#${o}`).val();
-                    
-                    if(temp.length<1 && oxy.length<1){
+
+                    if (temp.length < 1 && oxy.length < 1) {
                         alert("some details is empty");
-                        isempty=true;
+                        isempty = true;
 
                         break;
 
@@ -168,32 +194,32 @@
                     let getreadings = `{"temperature":${temp},"oxygen":${oxy}}`;
                     console.log(getreadings);
                     readings.push(getreadings);
-                    
+
 
                 }
-                if(isempty) return;
-                $.post("/api/admin/update",{
-                    email:email,
-                    dailyreport:readings
-                },function(data,status){
-                  alert(data)
+                if (isempty) return;
+                $.post("/api/admin/update", {
+                    email: email,
+                    dailyreport: readings
+                }, function (data, status) {
+                    alert(data)
                 })
 
 
             })
 
         });
-        $("#seestatus").click(function(){
-            $.post("/api/admin/getcases",{},function(data,status){
+        $("#seestatus").click(function () {
+            $.post("/api/admin/getcases", {}, function (data, status) {
                 console.log(data)
-                 $("#tbodi").html("");
-                
-                 for (i in data) {
+                $("#tbodi").html("");
+
+                for (i in data) {
                     let tdata = $("#tbodi").html();
-                    let nameid = "n-"+i;
-                    let pid = "p-"+i;
+                    let nameid = "n-" + i;
+                    let pid = "p-" + i;
                     console.log(pid);
-                
+
                     let id = String(data[i]._id);
                     console.log(id);
                     let datas = `<tr>
@@ -218,38 +244,38 @@
                         </tr>`
                     $("#tbodi").html(`${tdata}${datas}`)
                 }
-                
+
             });
 
         });
 
-       function update(i){
-          let b = "b"+i;
-          let check = $(`#${b}`).val()
-          console.log($(`#p-${i}`).is(":checked"));
-          console.log(`#p-${i}`);
-          let positive = false;
+        function update(i) {
+            let b = "b" + i;
+            let check = $(`#${b}`).val()
+            console.log($(`#p-${i}`).is(":checked"));
+            console.log(`#p-${i}`);
+            let positive = false;
 
-          if($(`#p-${i}`).is(":checked")){
-            positive=true;
-          }
+            if ($(`#p-${i}`).is(":checked")) {
+                positive = true;
+            }
             $.post("/api/admin/testreport", {
-               _id: check,
-               positive: positive
-           },function(data,status){
-               if(data=="true" || data == true){
-                   alert("test report updated");
+                _id: check,
+                positive: positive
+            }, function (data, status) {
+                if (data == "true" || data == true) {
+                    alert("test report updated");
                     $("#close").click();
-               }
-               else{
-                   alert(data);
-               }
-              
-           })
-         
-           
-          
-       }
+                }
+                else {
+                    alert(data);
+                }
+
+            })
+
+
+
+        }
 
 
     </script>

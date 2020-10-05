@@ -16,7 +16,20 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
     integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
     crossorigin="anonymous"></script>
+    <style>
+      #map {
+        height: 90%;
+        padding-top:20px;
+    
+      }
+    
+      html,
+      body {
+        height: 100%;
+      }
+    </style>
 </head>
+
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -48,6 +61,81 @@
       </button>
     </div>
   </nav>
+  <% if(locals.coordinate){ %>
+   
+  
+  <div id="map"></div>
+  <h1 style="display: none;" id="coo"><%= coordinate %></h1>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCYl0Kphvvp1g7E8sVnv3P-GP1QgOMZm9A&callback=initMap&libraries=&v=weekly"
+    async defer></script>
+  
+  <script>
+    let map;
+    let isloc =false;
+ 
+     async function initMap() {
+        map = await new google.maps.Map(document.getElementById('map'), {
+          center: { lat: Number(latitude), lng: Number(longitude) },
+          zoom: 9
+        });
+
+        console.log("iniyty");
+        
+       let e = document.getElementById("coo").innerHTML;
+       e = e.split(",");
+        navigator.geolocation.getCurrentPosition(getLatLon);
+       async function getLatLon(position) {
+         latitude = position.coords.latitude;
+         longitude = position.coords.longitude;
+           map = new google.maps.Map(document.getElementById('map'), {
+           center: { lat: Number(latitude), lng: Number(longitude) },
+           zoom: 9
+         });
+
+          addmarker(13.023335, 80.218536);
+         for (let i = 0; i < e.length; i++) {
+           console.log(typeof e[i])
+           console.log(e[i]);
+           addmarker(Number(e[i]), Number(e[i + 1]));
+           i++;
+           console.log("marker added");
+
+
+
+
+         }
+
+
+       }
+
+      
+       function addmarker(lat, lan) {
+         console.log("sw");
+         let coords = { lat: lat, lng: lan };
+       
+         let marker = new google.maps.Marker({
+           position: coords,
+           map: map,
+         });
+       }
+
+
+
+
+    
+      }
+    
+  
+  
+  
+ 
+   
+  </script>
+  
+  
+  <%}%>
 
   <!-- Login Modal -->
   <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -88,6 +176,7 @@
               </button>
             </div>
           </form>
+         
         </div>
       </div>
     </div>

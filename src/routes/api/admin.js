@@ -7,6 +7,8 @@ import User from "../../database/models/User";
 import virustest from "../../database/models/virustest"
 import Viruscases from "../../database/models/viruscases";
 import sendmail from "../../utils/nodemailer"
+import overallcases from "../../database/models/overallcases";
+import e from "express";
 const router = express.Router();
 const temp_level=99;
 const oxy_level =95;
@@ -36,16 +38,17 @@ router.post("/update", async (req, res) => {
     let dailyreports = req.body;
     
     let check=dailyreports["dailyreport[]"];
-    // console.log(check);
-    
- 
-
-    // console.log(email);
-    let dailyreport = check;
+     console.log( typeof dailyreports["dailyreport[]"]);
+     check.shift()
+     let dailyreport = check;
+     console.log(dailyreport);
     try {
         let isupdate = await UserDetail.findOneAndUpdate({ email }, { $set: { dailyreport: dailyreport } });
-        // console.log(dailyreport);
+        console.log(isupdate);
+         
+         
         for(let i in dailyreport){
+            
             let report = JSON.parse(dailyreport[i]);
             if(report.temperature>temp_level || report.oxygen<oxy_level){
                 let newcase = {
@@ -187,6 +190,25 @@ router.post("/",async(req,res)=>{
          }
          let text = newcase.name +" has been tested as positive our frontline workers will reach you soon please be under quarantine";
          await sendmail(newcase.email,text);
+         let email =newcase.email;
+         let getuserlocation = await UserDetail.findOne({email});
+         let userlocation = getuserlocation.location;
+         let overallcasefind = await overallcases.findOne({email});
+         if(!overallcasefind)
+            {
+                let locationarray=[];
+                locationarray.push(String(userlocation));
+                let insert = {
+                    email:email,
+                    coordinates:locationarray
+
+
+                }
+                await overallcases.insertMany(insert);
+             console.log("user location inserted to all cases")
+            }
+            
+
          let ispresent = await Viruscases.findOne(newcase);
          if(!ispresent)
            await Viruscases.insertMany(newcase);
