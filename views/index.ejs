@@ -89,6 +89,10 @@
        async function getLatLon(position) {
          latitude = position.coords.latitude;
          longitude = position.coords.longitude;
+            map = await new google.maps.Map(document.getElementById('map'), {
+           center: { lat: Number(latitude), lng: Number(longitude) },
+           zoom: 9
+         });
          
 
           addmarker(13.023335, 80.218536);
