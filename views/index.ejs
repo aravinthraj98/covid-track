@@ -57,7 +57,7 @@
         Login
       </button>
       <button class="btn btn-light ml-1" onclick="window.location.href='/api/admin'">
-        Admin
+        official login
       </button>
     </div>
   </nav>
@@ -96,10 +96,13 @@
          
 
           addmarker(13.023335, 80.218536);
+        //
+
          for (let i = 0; i < e.length; i++) {
            console.log(typeof e[i])
            console.log(e[i]);
            addmarker(Number(e[i]), Number(e[i + 1]));
+          
            i++;
            console.log("marker added");
 
@@ -113,7 +116,7 @@
 
       
        function addmarker(lat, lan) {
-         console.log("sw");
+         console.log(lat,lan);
          let coords = { lat: lat, lng: lan };
        
          let marker = new google.maps.Marker({

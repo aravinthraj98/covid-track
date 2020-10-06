@@ -89,7 +89,7 @@ function checkfunction() {
         street: $('#street').val(),
         location: locations,
         phonenumber: $('#phonenumber').val(),
-        area: $('#area').val(),
+        area: $('#area').val().toLowerCase(),
         city: $('#city').val(),
         zip: $('#zip').val(),
         noofmembers: $('#familyCount').val(),

@@ -229,11 +229,10 @@
 
       });
       function newarea(){
-        let area = $("#areacode").val();
+        let area = $("#areacode").val().toLowerCase();
         let password = $("#inputNewPassword").val();
         let confirmpassword=$("#inputConfirmPassword").val();
-        console.log(area);
-        console.log(password);
+     
         if(area.length>1 && password.length>1){
           if(password==confirmpassword){
                 $.post("/api/official/add",{
