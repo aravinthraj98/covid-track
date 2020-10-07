@@ -67,7 +67,7 @@ router.post("/update", async (req, res) => {
     catch (e) {
         return res.send(e + " error")
     }
-})
+});
 
 router.get("/",(req,res)=>{
    if (req.cookies.areacode && req.session.areacode == req.cookies.areacode) return res.render("adminAdd.ejs")
@@ -76,7 +76,7 @@ router.get("/",(req,res)=>{
    res.render('admin.ejs');
 });
 router.post("/add",async(req,res)=>{
-    if(!req.cookies.areacode || !req.session.areacode==req.cookies.areacode) return res.send("your session has expired please login again");
+    if(!req.cookies.areacode || !req.session.areacode==req.cookies.areacode ) return res.send("your session has expired please login again");
     // console.log(req.cookies);
     let user =req.body;
     // console.log(user);
@@ -98,10 +98,10 @@ router.post("/add",async(req,res)=>{
         noofmembers:user.noofmembers,
         familymembers:user["total[]"]
     }
-    
-    // console.log(detail);
-    // console.log(email);
-    const userfind = await UserDetail.findOne({email});
+    if (req.session.areacode!=user.area) return res.send('area mismatch');
+      // console.log(detail);
+      // console.log(email);
+      const userfind = await UserDetail.findOne({ email });
     if(userfind) return res.send("user already present");
     try{
         let text = `Welcome to covid track application your family has been registerd and your\n \npassword is ${create_password} you can change your password after login and also check your your profile whether your details are correct if not than complaint via the same app in \n complaint section`
